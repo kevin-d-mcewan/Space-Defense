@@ -20,6 +20,7 @@ public class Health : MonoBehaviour
 
     AudioPlayer audioPlayer;
     ScoreKeeper scoreKeeper;
+    LevelManager levelManager;
 
 
     private void Awake()
@@ -29,6 +30,7 @@ public class Health : MonoBehaviour
 
         audioPlayer = FindObjectOfType<AudioPlayer>();
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
+        levelManager = FindObjectOfType<LevelManager>();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -72,9 +74,15 @@ public class Health : MonoBehaviour
 
     private void Die()
     {
-        if (!isPlayer)
+        if (!isPlayer)      // Isn't the player is what '!isPlayer' means
         {
+            // If enemy dies we increase the score
             scoreKeeper.ModifyScore(score);
+        }
+        else
+        {
+            //If we are the Player and we die load the 'levelManager.LoadGameOver()' screen
+            levelManager.LoadGameOver();
         }
         Destroy(gameObject);
     }
